@@ -94,7 +94,7 @@
 
 \begin{abstract}
 \noindent   This paper presents an overview of Monte Carlo *-Minimax Search (MCMS), a Monte Carlo search algorithm for 
-  turned-based, stochastic, two-player, zero-sum games of perfect information.
+  turned-based, stochastic, two-player, zero-sum games of perfect information~\cite{Lanctot13MCMS}.
   MCMS combines sparse sampling techniques used in MDP planning with classic pruning techniques developed 
   for adversarial expectimax planning.
   MCMS has been compared to the traditional *-Minimax approaches, as well as MCTS  
@@ -106,35 +106,35 @@
 \section{Introduction}
 
 Monte Carlo sampling in game-tree search has received much attention in recent years due to successful applications to 
-Computer Go playing programs. 
-While the community has focused on deterministic two-player games, such as Go, Hex, and Lines of Action, there
+Go-playing programs. 
+While the community has focused mainly on deterministic two-player games, such as Go, Hex, and Lines of Action, there
 has been a growing interest in studying these sample-based approaches outside this traditional setting. The class of 
 perfect information games with chance events-- which includes, for example, Backgammon-- has received comparatively 
 little attention. 
 
 Classic algorithms such as minimax perform a depth-limited search from the root (current position), 
 returning a heuristic value if the depth limit is reached, or the value of the best available move otherwise.  
-$\alpha \beta$ pruning is applied to prevent searching provable wasteful portions of the tree. The largest 
-and most famous application of these techniques was in IBM's Deep Blue chess program which defeated the human master 
-Garry Kasporov. Expectimax is an extension of minimax that will return the expected values over children at 
-chance nodes, and *-minimax extends $\alpha \beta$ pruning to perfect information games with 
+$\alpha \beta$ pruning is commonly applied to prevent searching provably wasteful portions of the tree. The largest 
+and most famous application of these techniques was in IBM's Deep Blue chess program which defeated the human world 
+champion. Expectimax is an extension of minimax that will return the expected values over children at 
+chance nodes. The *-minimax algorithm extends $\alpha \beta$ pruning to perfect information games with 
 chance nodes~\cite{Ballard83}. 
 
 \subsection{Sparse Sampling in *-Minimax Search}
 
-Monte Carlo *-Minimax Search (MCMS) is an algorithm that samples a subset of the chance event outcomes at chance nodes
+Monte Carlo *-Minimax Search (MCMS) samples a subset of the chance event outcomes at chance nodes
 during its search~\cite{Lanctot13MCMS}. In essence, the algorithm applies *-minimax (Star1 or Star2) search to a sampled 
 and significantly smaller subgame to effectively increase the depth reached in a fixed time limit. 
 This way of using sampling to reduce computation is inspired by sparse sampling methods from the 
 MDP planning literature~\cite{kearns99} and is in contrast with recent Monte Carlo search algorithms such as Monte 
 Carlo Tree Search (MCTS), which are simulation-based and build a model of the game tree incrementally.
 
-Consider Figure~\ref{fig:example}. Suppose the of chance event outcomes is $N$. 
-In a game where players roll two six-sided dice, it may be that $N = 36$.  
+Consider Figure~\ref{fig:example}. Suppose the number of chance event outcomes is $N$. 
+For example, in a game where players roll two six-sided dice, it may be that $N = 36$.  
 The suppose the algorithm returns a value of $v_i$ for the subtree below outcome $i$, and the probability of outcome
-$i$ is $p_i$. Expectimax and *-Minimax will return the weighted $\sum_{i = 1}^N v_i p_i$. MCMS first samples $C < N$ outcomes,
-with replacement, sets $p'_i = 1/C$ and returns $\sum_{i = 1}^C p'_i v'_i$, where $v'_i$ is the value that MCMS 
-returns for the subtree under outcome $i$. 
+$i$ is $p_i$. Expectimax and *-Minimax will return the weighted sum $\sum_{i = 1}^N v_i p_i$. MCMS, however, 
+first samples $C < N$ outcomes (with replacement), sets $p'_i = 1/C$ and returns $\sum_{i = 1}^C p'_i v'_i$, 
+where $v'_i$ is the value that MCMS returns for the subtree under outcome $i$. 
 
 \begin{figure}[t!]
         \centering
@@ -270,8 +270,10 @@ by *-Minimax as the sample width, $C$, increases.
 Furthermore, the convergence does not depend on the number of states. 
 In practice, MCMS is shown to exhibit lower regret and bias than *-minimax on a small, solvable game. 
 This comes at a cost of increased variance due to sampling. 
-As seen in Figure~\ref{fig:perf}, results across four games show that sparse sampling consistently outperforms 
-the classical algorithms. When played against MCTS, sparse sampling increases the win rate of *-minimax. 
+As seen in Figure~\ref{fig:perf}, results across four games show that MCMS
+(ExpSS, Star1SS, or Star2SS) 
+consistently outperforms its classic counterpart (expectimax, Star1, or Star2). 
+When played against MCTS, MCMS wins 4-16\% more than *-minimax. 
 MCMS is also competitive against state-of-the-art MCTS in two of the four chosen games, outperforming 
 MCTS in Ra. 
 
