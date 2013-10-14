@@ -97,15 +97,16 @@
 %Put the abstract before the first section with the \verb+abstract+
 %environment. Please start the first paragraph of your abstract with a \verb+\noindent+ command.
 
-\begin{abstract}
-\noindent   This paper presents an overview of Monte Carlo *-Minimax Search (MCMS), a Monte Carlo search algorithm for 
-  turned-based, stochastic, two-player, zero-sum games of perfect information.
-  MCMS combines sparse sampling techniques used in MDP planning with classic pruning techniques developed 
-  for adversarial expectimax planning.
-  MCMS has been compared to the traditional *-Minimax approaches, as well as MCTS  
-  on four games. Results show that MCMS can be compete with enhanced MCTS variants in some domains, 
-  while outperforming the equivalent classic approaches given the same search time. 
-\end{abstract}
+% ML Oct 14th: Removed, as recommended by reviewer
+%\begin{abstract}
+%\noindent   This paper presents an overview of Monte Carlo *-Minimax Search (MCMS), a Monte Carlo search algorithm for 
+%  turned-based, stochastic, two-player, zero-sum games of perfect information.
+%  MCMS combines sparse sampling techniques used in MDP planning with classic pruning techniques developed 
+%  for adversarial expectimax planning.
+%  MCMS has been compared to the traditional *-Minimax approaches, as well as MCTS  
+%  on four games. Results show that MCMS can be compete with enhanced MCTS variants in some domains, 
+%  while outperforming the equivalent classic approaches given the same search time. 
+%\end{abstract}
 
 \footnotetext[1]{The full version of this paper has been accepted for the 23rd Joint Conference on Artificial Intelligence (IJCAI 2013).}
 
@@ -123,8 +124,11 @@ returning a heuristic value if the depth limit is reached, or the value of the b
 $\alpha \beta$ pruning prevents searching provably wasteful portions of the tree. The largest 
 and most famous application of these techniques was in IBM's Deep Blue chess program which defeated the human world 
 champion. Expectimax is an extension of minimax that will return the expected values over children at 
-chance nodes. The *-minimax algorithm extends $\alpha \beta$ pruning to perfect information games with 
+chance nodes~\cite{Michie66Exp}. The *-minimax algorithm extends $\alpha \beta$ pruning to perfect information games with 
 chance nodes~\cite{Ballard83}. 
+
+%In short, Monte Carlo *-Minimax Search combines sparse sampling techniques used in MDP planning 
+%with classic pruning techniques developed for adversarial search.
 
 \section{Sparse Sampling in *-Minimax Search}
 
